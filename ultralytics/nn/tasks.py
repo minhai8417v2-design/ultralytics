@@ -1586,12 +1586,7 @@ def parse_model(d, ch, verbose=True):
     ch = [ch]
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     base_modules = frozenset(
-        {   EMA,
-            GAM_Attention,
-            ShuffleAttention,
-            ECAAttention,
-            MHSA,
-            GAM_Attention,
+        {   
             GBS,
             GSConv,
             Classify,
@@ -1733,7 +1728,13 @@ def parse_model(d, ch, verbose=True):
             if c2 != nc:
                 c2 = make_divisible(min(c2, max_channels) * width, 8)
             args = [c1, *args[1:]]
-            
+
+        elif m is EMA:
+            c1, c2 = ch[f], args[0]
+            if c2 != nc:
+                c2 = make_divisible(min(c2, max_channels) * width, 8)
+            args = [c1, *args[1:]]
+          
         else:
             c2 = ch[f]
 
