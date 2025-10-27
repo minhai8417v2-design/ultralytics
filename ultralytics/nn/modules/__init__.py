@@ -192,5 +192,6 @@ from .conv import (
   GAM_Attention,
   ShuffleAttention,
   ECAAttention,
-  MHSA
+  MHSA,
+  EMA
 )
