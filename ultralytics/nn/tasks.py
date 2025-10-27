@@ -17,7 +17,8 @@ from ultralytics.nn.modules import (
   GAM_Attention,
   ShuffleAttention,
   ECAAttention,
-  MHSA
+  MHSA,
+  EMA
 )
 
 from ultralytics.nn.autobackend import check_class_names
@@ -1585,7 +1586,12 @@ def parse_model(d, ch, verbose=True):
     ch = [ch]
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     base_modules = frozenset(
-        {   GAM_Attention,
+        {   EMA,
+            GAM_Attention,
+            ShuffleAttention,
+            ECAAttention,
+            MHSA,
+            GAM_Attention,
             GBS,
             GSConv,
             Classify,
