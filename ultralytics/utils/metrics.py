@@ -1656,7 +1656,7 @@ def bbox_in_Wiou(box1, box2, xywh=True, CIoU=False, InCIoU=False, WIoU=False, In
 
 def get_inner_iou(box1, box2, xywh=True, eps=1e-7, ratio=0.7):
     if not xywh:
-        box1, box2 = ops.xyxy2xywh(box1), ops.xyxy2xywh(box2)
+        box1, box2 = xyxy2xywh(box1), xyxy2xywh(box2)
     (x1, y1, w1, h1), (x2, y2, w2, h2) = box1.chunk(4, -1), box2.chunk(4, -1)
     b1_x1, b1_x2, b1_y1, b1_y2 = x1 - (w1 * ratio) / 2, x1 + (w1 * ratio) / 2, y1 - (h1 * ratio) / 2, y1 + (h1 * ratio) / 2
     b2_x1, b2_x2, b2_y1, b2_y2 = x2 - (w2 * ratio) / 2, x2 + (w2 * ratio) / 2, y2 - (h2 * ratio) / 2, y2 + (h2 * ratio) / 2
@@ -1695,9 +1695,9 @@ class WIoU_Scale:
     @classmethod
     def _scaled_loss(cls, self, gamma=1.9, delta=3):
         if isinstance(self.monotonous, bool):
-            if self.monotonous:    #使用单调
+            if self.monotonous:    
                 return (self.iou.detach() / self.iou_mean).sqrt()
-            else:                  # 使用非单调
+            else:                  
                 beta = self.iou.detach() / self.iou_mean
                 alpha = delta * torch.pow(gamma, beta - delta)
                 return beta / alpha
