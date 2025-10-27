@@ -20,7 +20,8 @@ from ultralytics.nn.modules import (
   MHSA,
   EMA,
   ScConv,
-  C2f_ScConv
+  C2f_ScConv,
+  C2f_DCNv2
 )
 
 from ultralytics.nn.autobackend import check_class_names
