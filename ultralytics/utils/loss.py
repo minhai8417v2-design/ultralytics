@@ -16,6 +16,8 @@ from ultralytics.utils.torch_utils import autocast
 from .metrics import bbox_iou, probiou
 from .tal import bbox2dist
 
+# Edit here
+from .metrics import bbox_in_Wiou
 
 class VarifocalLoss(nn.Module):
     """
@@ -127,9 +129,21 @@ class BboxLoss(nn.Module):
     ) -> tuple[torch.Tensor, torch.Tensor]:
         """Compute IoU and DFL losses for bounding boxes."""
         weight = target_scores.sum(-1)[fg_mask].unsqueeze(-1)
-        iou = bbox_iou(pred_bboxes[fg_mask], target_bboxes[fg_mask], xywh=False, CIoU=True)
-        loss_iou = ((1.0 - iou) * weight).sum() / target_scores_sum
+        # iou = bbox_iou(pred_bboxes[fg_mask], target_bboxes[fg_mask], xywh=False, CIoU=True)
+        # loss_iou = ((1.0 - iou) * weight).sum() / target_scores_sum
+        
+############################################################## Inner-WIoU loss begin ########################################################################
+        iou = bbox_in_Wiou(pred_bboxes[fg_mask], target_bboxes[fg_mask], xywh=False, WIoU=True, scale=True, ratio=1.0)  #, ratio=0.95，1.05, 1.15, 1.25, 1.35
 
+        if type(iou) is tuple:  
+            if len(iou) == 2:
+                loss_iou = ((1.0 - iou[0]) * iou[1].detach() * weight).sum() / target_scores_sum      
+            else:
+                loss_iou = (iou[0] * iou[1] * weight).sum() / target_scores_sum      
+        else:
+            loss_iou = ((1.0 - iou) * weight).sum() / target_scores_sum     
+
+############################################################## Inner-WIoU loss end  #########################################################################
         # DFL loss
         if self.dfl_loss:
             target_ltrb = bbox2dist(anchor_points, target_bboxes, self.dfl_loss.reg_max - 1)
