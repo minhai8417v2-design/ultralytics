@@ -193,5 +193,6 @@ from .conv import (
   ShuffleAttention,
   ECAAttention,
   MHSA,
-  EMA
+  EMA,
+  ScConv
 )
