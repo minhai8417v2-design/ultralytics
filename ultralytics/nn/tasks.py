@@ -19,7 +19,8 @@ from ultralytics.nn.modules import (
   ECAAttention,
   MHSA,
   EMA,
-  ScConv
+  ScConv,
+  C2f_ScConv
 )
 
 from ultralytics.nn.autobackend import check_class_names
@@ -1588,6 +1589,7 @@ def parse_model(d, ch, verbose=True):
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     base_modules = frozenset(
         {   
+            C2f_ScConv
             GBS,
             GSConv,
             Classify,
@@ -1627,7 +1629,8 @@ def parse_model(d, ch, verbose=True):
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
-        {
+        {   
+            C2f_ScConv
             BottleneckCSP,
             C1,
             C2,
