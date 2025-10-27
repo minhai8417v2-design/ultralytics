@@ -18,7 +18,8 @@ from ultralytics.nn.modules import (
   ShuffleAttention,
   ECAAttention,
   MHSA,
-  EMA
+  EMA,
+  ScConv
 )
 
 from ultralytics.nn.autobackend import check_class_names
