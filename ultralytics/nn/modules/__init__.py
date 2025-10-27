@@ -196,3 +196,7 @@ from .conv import (
   EMA,
   ScConv
 )
+
+from .block import (
+   C2f_ScConv
+)
