@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 from torch.nn.parameter import Parameter
 from torch.nn import init
+import torch.nn.functional as F
 
 __all__ = (
     "Conv",
