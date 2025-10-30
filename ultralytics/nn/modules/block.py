@@ -2264,7 +2264,7 @@ class SRG_Bottleneck(nn.Module):
     x1, x2 = torch.chunk(x, 2, dim = 1)
     x1 = self.repghostconv1(x1)
     x_ = self.repghostconv2(torch.cat((x1, x2), dim = 1))
-    return x_
+    return x_ + x
 
 class CSRG(C3):
     def __init__(self, c1, c2, n=3, shortcut=True, g=1, e=0.5):  # ch_in, ch_out, number, shortcut, groups, expansion
