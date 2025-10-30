@@ -2134,7 +2134,8 @@ class C2f_DCNv2(C2f):
 ####################################################### CSRG ##################################################################
 class RepGhostModule(nn.Module):
     def __init__(
-            self, inp, oup, kernel_size=1, dw_size=3, stride=1, relu=True, deploy=False, reparam_bn=True,
+            self, inp, oup, kernel_size=1, dw_size=3, stride=1, #relu=True, 
+            deploy=False, reparam_bn=True,
             reparam_identity=False
     ):
         super(RepGhostModule, self).__init__()
@@ -2147,7 +2148,7 @@ class RepGhostModule(nn.Module):
                 inp, init_channels, kernel_size, stride, kernel_size // 2, bias=False,
             ),
             nn.BatchNorm2d(init_channels),
-            nn.SiLU(inplace=True) if relu else nn.Sequential(),
+            nn.SiLU(inplace=True) # if relu else nn.Sequential(),
         )
         fusion_conv = []
         fusion_bn = []
@@ -2176,17 +2177,17 @@ class RepGhostModule(nn.Module):
         )
         if deploy:
             self.cheap_operation = self.cheap_operation[0]
-        if relu:
-            self.relu = nn.SiLU(inplace=False)
-        else:
-            self.relu = nn.Sequential()
+        # if relu:
+        #     self.relu = nn.SiLU(inplace=False)
+        # else:
+        #     self.relu = nn.Sequential()
 
     def forward(self, x):
         x1 = self.primary_conv(x)  # mg
         x2 = self.cheap_operation(x1)
         for conv, bn in zip(self.fusion_conv, self.fusion_bn):
             x2 = x2 + bn(conv(x1))
-        return self.relu(x2)
+        return x2
 
     def get_equivalent_kernel_bias(self):
         kernel3x3, bias3x3 = self._fuse_bn_tensor(self.cheap_operation[0], self.cheap_operation[1])
