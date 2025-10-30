@@ -11,6 +11,7 @@ import torch
 import torch.nn as nn
 
 from ultralytics.nn.modules import (
+  CSRG,
   WF_Concat,
   GBS,
   GSConv,
@@ -263,6 +264,8 @@ class BaseModel(torch.nn.Module):
                     m.forward = m.forward_fuse
                 if isinstance(m, v10Detect):
                     m.fuse()  # remove one2many head
+                elif hasattr(m, 'switch_to_deploy'):
+                    m.switch_to_deploy()
             self.info(verbose=verbose)
 
         return self
@@ -1589,7 +1592,8 @@ def parse_model(d, ch, verbose=True):
     ch = [ch]
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     base_modules = frozenset(
-        {   C2f_DCNv2,
+        {   CSRG,
+            C2f_DCNv2,
             C2f_ScConv,
             GBS,
             GSConv,
@@ -1630,7 +1634,8 @@ def parse_model(d, ch, verbose=True):
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
-        {   C2f_DCNv2,
+        {   CSRG,
+            C2f_DCNv2,
             C2f_ScConv,
             BottleneckCSP,
             C1,
