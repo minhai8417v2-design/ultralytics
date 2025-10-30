@@ -199,5 +199,6 @@ from .conv import (
 
 from .block import (
    C2f_ScConv,
-   C2f_DCNv2
+   C2f_DCNv2,
+   CSRG
 )
