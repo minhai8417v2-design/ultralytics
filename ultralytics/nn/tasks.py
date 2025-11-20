@@ -1560,7 +1560,8 @@ def parse_model(d, ch, verbose=True):
             A2C2f,
             GSConv,
             VoVGSCSP,
-            ODConv2d
+            ODConv2d,
+            LDConv
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
