@@ -2454,6 +2454,8 @@ class ODConv2d(nn.Module):
     def forward(self, x):
         return self._forward_impl(x)
 
+from einops import rearrange
+
 class LDConv(nn.Module):
     def __init__(self, inc, outc, num_param, stride=1, bias=None):
         super(LDConv, self).__init__()
