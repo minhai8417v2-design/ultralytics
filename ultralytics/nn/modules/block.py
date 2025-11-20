@@ -2604,3 +2604,17 @@ class space_to_depth(nn.Module):
 #                          x[...,0:size_tensor[2]//2,size_tensor[3]//2:],
 #                          x[...,size_tensor[2]//2:,0:size_tensor[3]//2],
 #                          x[...,size_tensor[2]//2:,size_tensor[3]//2:]  ],1)
+
+class GBS(nn.Module):
+    default_act = nn.SiLU()  # default activation
+    def __init__(self, c1, c2, k=1, s=1, p=None, g=1, d=1, act=True):
+        super().__init__()
+        self.gsconv =  GSConv(c1, c2, k, s, p, g, d, act)
+        self.bn = nn.BatchNorm2d(c2)
+        self.act = self.default_act if act is True else act if isinstance(act, nn.Module) else nn.Identity()
+
+    def forward(self, x):
+        return self.act(self.bn(self.gsconv(x)))
+
+    def forward_fuse(self, x):
+        return self.act(self.gsconv(x))
