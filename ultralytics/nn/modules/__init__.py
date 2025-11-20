@@ -62,7 +62,8 @@ from .block import (
     C2f_ODConv,
     GSConv,
     VoVGSCSP,
-    C2f_Faster
+    C2f_Faster,
+    ODConv2d
 )
 from .conv import (
     CBAM,
