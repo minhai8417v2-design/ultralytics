@@ -1,6 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 """Block modules."""
-import math
 from __future__ import annotations
 
 import torch
@@ -2317,7 +2316,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.autograd
-
+import math
 
 class Attention(nn.Module):
     def __init__(self, in_planes, out_planes, kernel_size, groups=1, reduction=0.0625, kernel_num=4, min_channel=16):
