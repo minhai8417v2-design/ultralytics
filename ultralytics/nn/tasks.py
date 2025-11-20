@@ -1558,10 +1558,8 @@ def parse_model(d, ch, verbose=True):
             SCDown,
             C2fCIB,
             A2C2f,
-            C2f_ODConv,
             GSConv,
             VoVGSCSP,
-            C2f_Faster,
             ODConv2d
         }
     )
@@ -1581,11 +1579,7 @@ def parse_model(d, ch, verbose=True):
             C2fPSA,
             C2fCIB,
             C2PSA,
-            A2C2f,
-            C2f_ODConv,
-            VoVGSCSP,
-            C2f_Faster,
-            ODConv2d
+            A2C2f
         }
     )
     for i, (f, n, m, args) in enumerate(d["backbone"] + d["head"]):  # from, number, module, args
@@ -1657,6 +1651,8 @@ def parse_model(d, ch, verbose=True):
             c2 = args[0]
             c1 = ch[f]
             args = [*args[1:]]
+        elif m is space_to_depth:
+            c2 = 4*ch[f]
         else:
             c2 = ch[f]
 
