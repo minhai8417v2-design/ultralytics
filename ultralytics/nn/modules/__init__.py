@@ -61,7 +61,8 @@ from .block import (
     TorchVision,
     C2f_ODConv,
     GSConv,
-    VoVGSCSP
+    VoVGSCSP,
+    C2f_Faster
 )
 from .conv import (
     CBAM,
