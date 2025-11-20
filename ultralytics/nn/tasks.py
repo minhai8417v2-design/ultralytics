@@ -72,7 +72,8 @@ from ultralytics.nn.modules import (
     GSConv,
     ODConv2d,
     space_to_depth,
-    LDConv
+    LDConv,
+    GBS
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, LOGGER, YAML, colorstr, emojis
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -1561,7 +1562,8 @@ def parse_model(d, ch, verbose=True):
             GSConv,
             VoVGSCSP,
             ODConv2d,
-            LDConv
+            LDConv,
+            GBS
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
