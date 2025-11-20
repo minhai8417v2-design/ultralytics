@@ -63,7 +63,8 @@ from .block import (
     VoVGSCSP,
     ODConv2d,
     LDConv,
-    space_to_depth
+    space_to_depth,
+    GBS
 )
 from .conv import (
     CBAM,
