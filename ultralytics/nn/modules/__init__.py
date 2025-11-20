@@ -59,11 +59,11 @@ from .block import (
     ResNetLayer,
     SCDown,
     TorchVision,
-    C2f_ODConv,
     GSConv,
     VoVGSCSP,
-    C2f_Faster,
-    ODConv2d
+    ODConv2d,
+    LDConv,
+    space_to_depth
 )
 from .conv import (
     CBAM,
