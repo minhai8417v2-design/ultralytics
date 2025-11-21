@@ -64,7 +64,9 @@ from .block import (
     ODConv2d,
     LDConv,
     space_to_depth,
-    GBS
+    GBS,
+    EMA,
+    C2f_ScConv
 )
 from .conv import (
     CBAM,
