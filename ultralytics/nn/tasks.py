@@ -73,7 +73,9 @@ from ultralytics.nn.modules import (
     ODConv2d,
     space_to_depth,
     LDConv,
-    GBS
+    GBS,
+    EMA,
+    C2f_ScConv
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, LOGGER, YAML, colorstr, emojis
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -1563,7 +1565,8 @@ def parse_model(d, ch, verbose=True):
             VoVGSCSP,
             ODConv2d,
             LDConv,
-            GBS
+            GBS,
+            C2f_ScConv
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
@@ -1582,7 +1585,8 @@ def parse_model(d, ch, verbose=True):
             C2fPSA,
             C2fCIB,
             C2PSA,
-            A2C2f
+            A2C2f,
+            C2f_ScConv
         }
     )
     for i, (f, n, m, args) in enumerate(d["backbone"] + d["head"]):  # from, number, module, args
@@ -1656,6 +1660,11 @@ def parse_model(d, ch, verbose=True):
             args = [*args[1:]]
         elif m is space_to_depth:
             c2 = 4*ch[f]
+        elif m is EMA:
+            c1, c2 = ch[f], args[0]
+            if c2 != nc:
+                c2 = make_divisible(min(c2, max_channels) * width, 8)
+            args = [c1, *args[1:]]
         else:
             c2 = ch[f]
 
