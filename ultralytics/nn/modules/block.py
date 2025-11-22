@@ -2777,6 +2777,10 @@ class C2f_ScConv(C2f):
         super().__init__(c1, c2, n, shortcut, g, e)
         self.m = nn.ModuleList(Bottleneck_ScConv(self.c, self.c, shortcut, g, k=(3, 3), e=1.0) for _ in range(n))
 
+
+
+from torchvision.ops import deform_conv2d
+
 class DCNv2(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=1, dilation=1, groups=1, deformable_groups=1):
@@ -2815,7 +2819,7 @@ class DCNv2(nn.Module):
         o1, o2, mask = torch.chunk(offset_mask, 3, dim=1)
         offset = torch.cat((o1, o2), dim=1)
         mask = torch.sigmoid(mask)
-        x = torch.ops.torchvision.deform_conv2d(
+        x = deform_conv2d(
             x,
             self.weight,
             offset,
