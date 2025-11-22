@@ -66,7 +66,8 @@ from .block import (
     space_to_depth,
     GBS,
     EMA,
-    C2f_ScConv
+    C2f_ScConv,
+    C2f_DCN
 )
 from .conv import (
     CBAM,
