@@ -2781,7 +2781,7 @@ class C2f_ScConv(C2f):
 
 import math
 import torchvision
-class DCN2Conv(nn.Module):
+class DCNv2(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1,
                  padding=None, groups=1, dilation=1, act=True, deformable_groups=1):
         super(DCNv2, self).__init__()
@@ -2853,7 +2853,7 @@ class Bottleneck_DCN(nn.Module):
         super().__init__()
         c_ = int(c2 * e)
         self.cv1 = Conv(c1, c_, k[0], 1)
-        self.cv2 = DCN2Conv(c_, c2, k[1], 1, groups=g)  # Replace only the second conv
+        self.cv2 = DCNv2(c_, c2, k[1], 1, groups=g)  # Replace only the second conv
         self.add = shortcut and c1 == c2
 
     def forward(self, x):
