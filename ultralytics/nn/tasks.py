@@ -76,7 +76,8 @@ from ultralytics.nn.modules import (
     GBS,
     EMA,
     C2f_ScConv,
-    C2f_DCN
+    C2f_DCN,
+    DCNv2
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, LOGGER, YAML, colorstr, emojis
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -1568,7 +1569,8 @@ def parse_model(d, ch, verbose=True):
             LDConv,
             GBS,
             C2f_ScConv,
-            C2f_DCN
+            C2f_DCN, 
+            DCNv2
         }
     )
     repeat_modules = frozenset(  # modules with 'repeat' arguments
@@ -1589,7 +1591,8 @@ def parse_model(d, ch, verbose=True):
             C2PSA,
             A2C2f,
             C2f_ScConv,
-            C2f_DCN
+            C2f_DCN,
+            DCNv2
         }
     )
     for i, (f, n, m, args) in enumerate(d["backbone"] + d["head"]):  # from, number, module, args
