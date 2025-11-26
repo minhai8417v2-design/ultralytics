@@ -69,7 +69,8 @@ from .block import (
     C2f_ScConv,
     C2f_DCN,
     DCNv2,
-    C2f_Faster
+    C2f_Faster,
+    C2f_DCNv3
 )
 from .conv import (
     CBAM,
