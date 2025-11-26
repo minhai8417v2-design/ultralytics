@@ -3212,7 +3212,7 @@ class C2f_DCNv3(nn.Module):
         y = list(x)
         # y = list(self.cv1(x).chunk(2, 1))
         y.extend(m(y[-1]) for m in self.m)
-        return self.cv2(torch.cat(y, 1))
+        return self.cv2(torch.cat(y, 1)).half()
 
     def forward_split(self, x):
         """Forward pass using split() instead of chunk()."""
