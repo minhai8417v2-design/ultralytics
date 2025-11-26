@@ -68,7 +68,8 @@ from .block import (
     EMA,
     C2f_ScConv,
     C2f_DCN,
-    DCNv2
+    DCNv2,
+    C2f_Faster
 )
 from .conv import (
     CBAM,
