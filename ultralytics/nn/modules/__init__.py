@@ -70,7 +70,9 @@ from .block import (
     C2f_DCN,
     DCNv2,
     C2f_Faster,
-    C2f_DCNv3
+    C2f_DCNv3,
+    ODConv2d,
+    C2f_ODConv
 )
 from .conv import (
     CBAM,
